@@ -47,17 +47,6 @@
   <h1>Character Guesser</h1>
 
   <h2>Auto-guesser the character from Genshin Impact</h2>
-  <table style="width:100%", id="Trysss">
-    <tr>
-        <td>Number</td> <td>Name</td> <td>Rarity</td> <td>Element</td> <td>Weapon</td> <td>Region</td> <td>Version</td>
-    </tr>
-  </table>
-  <br>
-    <label for="Guess">Guess the characters:</label><br>
-    <input type="text" id="Guess" oninput="">
-    <br>
-    <button type="button" id="re" onclick="addROW()">Row</button>
-    <br>
 
 <table class="centerTable", id="ToMuchButtons">
 <tr>
@@ -125,17 +114,26 @@
 </tr>
 </table>
 <br>
+<table style="width:100%", id="Trysss">
+    <tr>
+        <td>Number</td> <td>Name</td> <td>Rarity</td> <td>Element</td> <td>Weapon</td> <td>Region</td> <td>Version</td>
+    </tr>
+</table>
+<br>
+<button type="button" id="re" onclick="PrintTable()">Print</button>
+<br>
 <label id="test"></label>
 
 
   <script>
     let Characters = [
-        ["1", "Albedo", "5", "Geo", "Sword", "Mondstadt", "1.2"],
-        ["2", "Aloy", "5", "Cryo", "Bow", "Outlander", "1.3"],
-        ["3", "Amber", "4", "Pyro", "Bow", "Mondstadt", "1.0"],
-        ["4", "Arataki Itto", "5", "Geo", "Claymore", "Inazuma", "1.6"],
-        ["5", "Barbara", "4", "Hydro", "Catalyst", "Mondstadt", "1.0"]
+        ["1", "Albedo", "5", "Geo", "Sword", "Mondstadt", 1.2],
+        ["2", "Aloy", "5", "Cryo", "Bow", "Outlander", 1.3],
+        ["3", "Amber", "4", "Pyro", "Bow", "Mondstadt", 1.0],
+        ["4", "Arataki Itto", "5", "Geo", "Claymore", "Inazuma", 1.6],
+        ["5", "Barbara", "4", "Hydro", "Catalyst", "Mondstadt", 1.0]
     ];
+
     let rarity = [0, 0]; // 4 star, 5 star
     let element = [0, 0, 0, 0, 0, 0, 0]; // Anemo, Geo, Electro, Dendro, Hydro, Pyro, Cryo
     let weapon = [0, 0, 0, 0, 0]; // Sword, Claymore, Polearm, Bow, Catalyst
@@ -161,12 +159,35 @@
         document.getElementById("test").innerText = thing;
     }
 
-    function addROW() {
+    function PrintTable() {
         var table = document.getElementById("Trysss");
-        var row = table.insertRow(-1);
-        for (let i = 0; i < 7; i++) {
-            var cell = row.insertCell(i);
-            cell.innerHTML = Characters[0][i];
+        document.getElementById("test").innerText = rarity.indexOf(1);
+        for (let i = 0; i <Characters.length; i++) {
+            switch (rarity.indexOf(1)) {
+                case -1:
+                    var row = table.insertRow(-1);
+                    for (let j = 0; j < 7; j++) {
+                        var cell = row.insertCell(j);
+                        cell.innerHTML = Characters[i][j];
+                    }
+                    break;
+                case 0:
+                    if (Characters[i][2] != "4") continue;
+                    var row = table.insertRow(-1);
+                    for (let j = 0; j < 7; j++) {
+                        var cell = row.insertCell(j);
+                        cell.innerHTML = Characters[i][j];
+                    }
+                    break;
+                case 1:
+                    if (Characters[i][2] != "5") continue;
+                    var row = table.insertRow(-1);
+                                   for (let j = 0; j < 7; j++) {
+                        var cell = row.insertCell(j);
+                        cell.innerHTML = Characters[i][j];
+                    }
+                    break;
+            }
         }
     }
   </script>
