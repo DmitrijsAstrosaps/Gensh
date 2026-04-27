@@ -16,18 +16,6 @@
     table, th, td {
         border:1px solid white;
     }
-    /* .correct{
-        background-color: lightgreen;
-        color: black;
-    }
-    .incorrect{
-        background-color: lightcoral;
-        color: black;
-    }
-    .mid{
-        background-color: lightgoldenrodyellow;
-        color: black;
-    } */
     button {
         background-color: white;
         color: black;
@@ -127,13 +115,28 @@
 
 
   <script>
-    let Characters = [
-        ["1", "Albedo", "5", "Geo", "Sword", "Mondstadt", 1.2],
-        ["2", "Aloy", "5", "Cryo", "Bow", "Outlander", 1.3],
-        ["3", "Amber", "4", "Pyro", "Bow", "Mondstadt", 1.0],
-        ["4", "Arataki Itto", "5", "Geo", "Claymore", "Inazuma", 1.6],
-        ["5", "Barbara", "4", "Hydro", "Catalyst", "Mondstadt", 1.0]
-    ];
+    let Characters = [];
+
+
+    async function loadCharacters() {
+        const response = await fetch('Character_List.csv');
+        const data = await response.text();
+        const lines = data.trim().split('\n');
+        Characters = lines.map(line => {
+            const cols = line.replace('\r', '').split(';');
+            return [
+                cols[0],
+                cols[1],
+                cols[2],
+                cols[3],
+                cols[4],
+                cols[5],
+                parseFloat(cols[6])
+            ];
+        });
+    }
+
+    window.onload = loadCharacters;
 
     let dataNames = [
         ["4", "5"], 
@@ -206,10 +209,10 @@
         while (table.rows.length > 1) {
             table.deleteRow(1);
         }
-        for(i = 0; i < Characters.length; i++){
+        for(let i = 0; i < Characters.length; i++){
             let canPrint = true;
-            for(j = 0; j < dataButtons.length-1; j++){
-                for(k = 0; k < dataButtons[j].length; k++){
+            for(let j = 0; j < dataButtons.length-1; j++){
+                for(let k = 0; k < dataButtons[j].length; k++){
                     if(dataButtons[j][k] == 2 && Characters[i][j+2] == dataNames[j][k]){
                         canPrint = false;
                     }
@@ -217,13 +220,13 @@
                         canPrint = false;
                     }
                 }
-            } 
-            if(!diference(i)){
+            }
+            if(diference(i) == false){
                 canPrint = false;
             }
             if(canPrint){
                 let row = table.insertRow();
-                for(j = 0; j < Characters[i].length; j++){
+                for(let j = 0; j < Characters[i].length; j++){
                     let cell = row.insertCell();
                     cell.innerText = Characters[i][j];
                 }
