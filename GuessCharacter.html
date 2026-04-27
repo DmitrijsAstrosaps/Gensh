@@ -53,20 +53,20 @@
     <input type="text" id="Guess" oninput="">
     <br>
     <br>
-    <button type="button" id="GuessButton" onclick="test_function()">Test1</button>
-    <button type="button" id="GuessButton" onclick="test_function()">Test2</button>
-    <button type="button" id="GuessButton" onclick="test_function()">Test3</button>
-    <button type="button" id="GuessButton" onclick="test_function()">Test4</button>
-    <button type="button" id="GuessButton" onclick="test_function()">Test5</button>
+    <button type="button" id="GuessButton" onclick="test_function(0)">Test1</button>
+    <button type="button" id="GuessButton" onclick="test_function(1)">Test2</button>
+    <button type="button" id="GuessButton" onclick="test_function(2)">Test3</button>
+    <button type="button" id="GuessButton" onclick="test_function(3)">Test4</button>
+    <button type="button" id="GuessButton" onclick="test_function(4)">Test5</button>
     <br>
     <label id="test"></label>
 
   <script>
-    let num = 0;
+    let num = [0, 0, 0, 0, 0];
     const button = document.querySelectorAll('#GuessButton');
     button.forEach(btn => {
         btn.addEventListener('click', () => {
-            switch(num){
+            switch(num[0]){
                 case 0:
                     btn.style.backgroundColor = 
                     "white";
@@ -83,10 +83,10 @@
         });
     });
 
-    function test_function(){
-        num += 1;
-        if (num == 3){
-            num = 0;
+    function test_function(count){
+        num[count] += 1;
+        if (num[count] == 3){
+            num[count] = 0;
         }
         document.getElementById("test").innerText = num;
     }
