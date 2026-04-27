@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DnDdle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    table, th, td {
+        border:1px solid white;
+    }
+    .correct{
+        background-color: lightgreen;
+        color: black;
+    }
+    .incorrect{
+        background-color: lightcoral;
+        color: black;
+    }
+    .mid{
+        background-color: lightgoldenrodyellow;
+        color: black;
+    }
+    .arrow-up {
+        background-color: lightgoldenrodyellow;
+        color: black;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><polygon points='10,0 0,20 20,20' fill='green'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        padding-right: 20px;
+    }
+
+    .arrow-down {
+        background-color: lightgoldenrodyellow;
+        color: black;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><polygon points='0,0 20,0 10,20' fill='red'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        padding-right: 20px;
+    }
+    input[type="radio"]{
+        margin: 5px 5px 10px 80px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>DnDdle</h1>
+
+  <table style="width:100%", id="Trysss">
+    <tr>
+        <!-- Имя Система Пол Класс Раса Создатель Кампейн Статус Возраст Рост НПС Сложность -->
+        <td>Пытка</td> <td>Имя</td> <td>Система</td> <td>Пол</td> <td>Класс</td> <td>Раса</td> <td>Создатель</td> <td>Кампейн</td> <td>Статус</td> <td>Возраст</td> <td>Рост</td> <td>НПС</td> <td>Сложность</td>
+    </tr>
+  </table>
+  <br>
+    <input type="radio" id="diff0" name="diff" value="0" checked>
+    <label>0</label>
+    <input type="radio" id="diff1" name="diff" value="1">
+    <label>1</label>
+    <input type="radio" id="diff2" name="diff" value="2">
+    <label>2</label>
+    <input type="radio" id="diff3" name="diff" value="3">
+    <label>3</label><br>
+
+    <label for="Guess">Guess the characters:</label><br>
+    <input type="text" id="Guess" oninput="onKeyPress(event)">
+    <button type="button" id="enter" onclick="play()">Enter</button>
+    <button type="button" id="reset" onclick="GameReset()">Reset</button><br>
+    <br>
+    <label id="similarValues">Идёт настройка</label>
+
+  <script>
+    document.getElementById("Guess").disabled = true;
+    document.getElementById("enter").disabled = true;
+    document.getElementById("reset").disabled = true;
+    document.getElementById('Guess').value = "";
+    let Charecter = [];
+    let mozno = [];
+    let pohoz = [];
+    let GuessNum;
+    let count = 1;
+
+    fetch('https://script.google.com/macros/s/AKfycbxSvNpp9RCQZYsk66xcq2aXVug8jvSmY7SYVY7Pm9YV-kFFef20Mm8tHmRhlEEGKzmEPw/exec')
+      .then(response => response.json())
+      .then(data => {
+        const filteredData = data.filter(row => {
+        const cell = row[12];
+            return cell !== null && cell !== undefined && cell !== '';
+        });
+        Charecter = filteredData.map(row => row.slice(1, 13));
+        if (Charecter.length > 0 && Charecter[0].some(cell => typeof cell === 'string')) {
+            Charecter.shift();
+        }
+        //console.log(Charecter)
+
+        GuessNum = Math.floor((Math.random() * (Charecter.length)) + 0);
+        while (Charecter[GuessNum][11]>0){
+            //console.log(GuessNum);
+            GuessNum = Math.floor((Math.random() * (Charecter.length)) + 0);
+        }
+        //console.log(Charecter[GuessNum]);
+
+        for (let i = 0; i<Charecter.length; i++){
+            if (Charecter[i][11] === 0){
+                pohoz.push(Charecter[i][0])
+            }
+        }
+        document.getElementById("Guess").disabled = false;
+        document.getElementById("enter").disabled = false;
+        document.getElementById("reset").disabled = false;
+        document.getElementById('similarValues').innerText = "Настройка завершена";
+  })
+  .catch(error => console.error('Ошибка при получении данных:', error));
+
+    function play(){
+        let Gues;
+        let Comp;
+        mozno = [];
+
+        let num = getNum()
+        if (num >= 0 && num < Charecter.length){
+            Gues = Charecter[num]
+            Comp = Charecter[GuessNum]
+
+            let [name, sistem, gender, clazz, race, owner, compain, statuss, age, heigh, NPC, difficult] = Comp;
+            let [Gname, Gsistem, Ggender, Gclazz, Grace, Gowner, Gcompain, Gstatuss, Gage, Gheigh, GNPC, Gdifficult] = Gues;
+
+            if (pohoz.includes(Gname)){
+                let index = pohoz.indexOf(Gname);
+                if (index !== -1) {
+                    pohoz.splice(index, 1);
+                }
+            }
+            else{
+                alert("ERROR\nName already used");
+                return;
+            }
+
+            mozno.push(5);
+            mozno.push(equale(Gname, name));
+            mozno.push(equale(Gsistem, sistem));
+            mozno.push(equale(Ggender,gender));
+            mozno.push(klaz_equale(Gclazz,clazz));
+            mozno.push(equale(Grace,race));
+            mozno.push(equale(Gowner, owner));
+            mozno.push(compin_equale(Gcompain,compain));
+            mozno.push(equale(Gstatuss,statuss));
+            mozno.push(number_equal(Gage,age));
+            mozno.push(number_equal(Gheigh,heigh));
+            mozno.push(equale(GNPC,NPC));
+            mozno.push(number_equal(Gdifficult,difficult));
+
+            addROW(num);
+
+            count = count+1;
+            setTimeout(function() {
+                if (Gues === Comp){
+                    alert("WIN WIN WIN\nNumber of tries: "+(count-1));
+                    document.getElementById("Guess").disabled = true;
+                    document.getElementById("enter").disabled = true;
+                }
+            }, 250);
+
+            document.getElementById('similarValues').innerText = "";
+        }
+    }
+    
+    function equale(fir, sec){
+        if (fir === sec){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    function klaz_equale(fir, sec){
+        if(fir !== sec){
+            if(fir !== "Все"){
+                for (let f of fir.split("/")){
+                    for (let s of sec.split("/")){
+                        if (f===s){
+                            return 4;
+                        }
+                    }
+                }
+                return 0;
+            }
+            else{
+                return 4;
+            }
+        }
+        else{
+            return 1;
+        }
+    }
+
+    function compin_equale(fir, sec){
+        fir = fir.replace(/\s/g,"");
+        sec = sec.replace(/\s/g,"");
+        if(fir !== sec){
+            if(fir !== "Все"){
+                for (let f of fir.split(",")){
+                    for (let s of sec.split(",")){
+                        // console.log(f, s, f===s)
+                        // console.log(f.split('').map(c => c.charCodeAt(0)))
+                        // console.log(s.split('').map(c => c.charCodeAt(0)))
+                        if (f===s){
+                            return 4;
+                        }
+                    }
+                }
+                return 0;
+            }
+            else{
+                return 4;
+            }
+        }
+        else{
+            return 1;
+        }
+    }
+
+    function number_equal(fir, sec){
+        if(fir !== sec){
+            if(fir !== "NONE"){
+                if(sec !== "NONE"){
+                    if(parseInt(fir) < parseInt(sec)){
+                        return 2;
+                    }
+                    else{
+                        return 3;
+                    }
+                }
+                else{
+                    return 0;
+                }
+            }
+            else{
+                return 0;
+            }
+        }
+        else{
+            return 1;
+        }
+    }
+    
+    function getNum(){
+        var Gname = document.getElementById('Guess').value;
+        if (Gname=="" || Gname==null) {
+            alert("Please Fill In All Required Fields");
+            return;
+        }
+        for (let i = 0; i < Charecter.length; i++) {
+            if (Gname.toLowerCase() == Charecter[i][0].toLowerCase()){
+                document.getElementById('Guess').value = "";
+                return i;
+            }
+            let spli = Charecter[i][0].split(" ");
+            for (let k = 0; k < spli.length; k++){
+                if (Gname.toLowerCase() == spli[k].toLowerCase()) {
+                    document.getElementById('Guess').value = "";
+                    return i;
+                }
+            }
+        }
+
+        alert("ERROR\nWrong name");
+        document.getElementById('Guess').value = "";
+    }
+    
+    function addROW(numb) {
+        var table = document.getElementById("Trysss");
+        var row = table.insertRow(-1);
+        let rower = [...Charecter[numb]];
+        rower.unshift(count)
+        //console.log(Charecter[numb])
+        for (let j = 0; j < rower.length; j++){
+            var cell = row.insertCell(j);
+            cell.innerHTML = rower[j];
+            switch (mozno[j]){
+                case 0:
+                    cell.classList.add("incorrect");
+                    break;
+                case 1: 
+                    cell.classList.add("correct");
+                    break;
+                case 2: 
+                    cell.classList.add("arrow-up");
+                    break;
+                case 3: 
+                    cell.classList.add("arrow-down");
+                    break;
+                case 4:
+                    cell.classList.add("mid")
+                    break;
+                case 5:
+                    break;
+
+            }
+        }
+    }
+
+    function GameReset(){
+        document.getElementById("Guess").disabled = false;
+        document.getElementById("enter").disabled = false;
+        const tablic = document.getElementById("Trysss");
+        const radio = document.querySelector('input[name="diff"]:checked');
+        pohoz = [];
+        count = 1;
+        while (tablic.rows.length > 1) {
+            tablic.deleteRow(1);
+        }
+        switch(radio.value){
+            case "0":
+                for (let r =0; r<Charecter.length; r++){
+                    if (Charecter[r][11]===0){
+                        pohoz.push(Charecter[r][0]);
+                    }
+                }
+                break;
+            case "1":
+                for (let r =0; r<Charecter.length; r++){
+                    if (Charecter[r][11]===0 || Charecter[r][11]===1){
+                        pohoz.push(Charecter[r][0]);
+                    }
+                }
+                break;
+            case "2":
+                for (let r =0; r<Charecter.length; r++){
+                    if (Charecter[r][11]===0 || Charecter[r][11]===1 || Charecter[r][11]===2){
+                        pohoz.push(Charecter[r][0]);
+                    }
+                }
+                break;
+            case "3":
+                for (let r =0; r<Charecter.length; r++){
+                    pohoz.push(Charecter[r][0]);
+                }
+                break;
+        }
+
+        GuessNum = Math.floor((Math.random() * (Charecter.length)) + 0);
+        while(Charecter[GuessNum][11]>parseInt(radio.value)){
+            //console.log(GuessNum)
+            GuessNum = Math.floor((Math.random() * (Charecter.length)) + 0);
+        }
+        //console.log(GuessNum)
+    }
+
+    document.getElementById("Guess").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            play();
+            
+        }
+    });
+
+    function onKeyPress(event) {
+        const typedText = event.target.value.toLowerCase();
+
+        if (typedText) {
+            const similarValues = pohoz.filter(value => 
+                typeof value === 'string' && value.toLowerCase().startsWith(typedText)
+            );
+
+            if (similarValues.length > 0) {
+                const repl = similarValues.map(s => s.replace("\n", " "));
+                document.getElementById('similarValues').innerText = repl.join(", ");
+            } else {
+                document.getElementById('similarValues').innerText = "Нет похожих значений";
+            }
+        } else {
+            document.getElementById('similarValues').innerText = "";
+        }
+    }
+
+  </script>
+</body>
+</html>
