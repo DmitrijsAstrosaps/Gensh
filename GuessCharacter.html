@@ -61,14 +61,14 @@
     <td><button type="button" id="GuessButton-element" onclick="test_function(dataButtons[1], 0, this)">Anemo</button></td>
     <td></td>
     <td><button type="button" id="GuessButton-region" onclick="test_function(dataButtons[3], 1, this)">Liyue</button></td>
-    <td><button type="button" id="GuessButton-version" onclick="test_function(dataButtons[4], 0, this)">Up</button></td>
+    <td><button type="button" id="GuessButton-version" onclick="version(dataButtons[4], 0, this)">Up</button></td>
 </tr>
 <tr>
     <td></td>
     <td><button type="button" id="GuessButton-element" onclick="test_function(dataButtons[1], 1, this)">Geo</button></td>
     <td><button type="button" id="GuessButton-weapon" onclick="test_function(dataButtons[2], 1, this)">Claymore</button></td>
     <td><button type="button" id="GuessButton-region" onclick="test_function(dataButtons[3], 2, this)">Inazuma</button></td>
-    <td></td>
+    <td><input type="text" id="up"></td>
 </tr>
 <tr>
     <td><button type="button" id="GuessButton-rarity" onclick="test_function(dataButtons[0], 0, this)">4 star</button></td>
@@ -82,14 +82,14 @@
     <td><button type="button" id="GuessButton-element" onclick="test_function(dataButtons[1], 3, this)">Dendro</button></td>
     <td><button type="button" id="GuessButton-weapon" onclick="test_function(dataButtons[2], 2, this)">Polearm</button></td>
     <td><button type="button" id="GuessButton-region" onclick="test_function(dataButtons[3], 4, this)">Fontaine</button></td>
-    <td><button type="button" id="GuessButton-version" onclick="test_function(dataButtons[4], 1, this)">Equale</button></td>
+    <td><button type="button" id="GuessButton-version" onclick="version(dataButtons[4], 1, this)">Equale</button></td>
 </tr>
 <tr>
     <td><button type="button" id="GuessButton-rarity" onclick="test_function(dataButtons[0], 1, this)">5 star</button></td>
     <td><button type="button" id="GuessButton-element" onclick="test_function(dataButtons[1], 4, this)">Hydro</button></td>
     <td></td>
     <td><button type="button" id="GuessButton-region" onclick="test_function(dataButtons[3], 5, this)">Natlan</button></td>
-    <td></td>
+    <td><input type="text" id="equale"></td>
 </tr>
 <tr>
     <td></td>
@@ -103,14 +103,14 @@
     <td><button type="button" id="GuessButton-element" onclick="test_function(dataButtons[1], 6, this)">Cryo</button></td>
     <td></td>
     <td><button type="button" id="GuessButton-region" onclick="test_function(dataButtons[3], 7, this)">Snezhnaya</button></td>
-    <td><button type="button" id="GuessButton-version" onclick="test_function(dataButtons[4], 2, this)">Down</button></td>
+    <td><button type="button" id="GuessButton-version" onclick="version(dataButtons[4], 2, this)">Down</button></td>
 </tr>
 <tr> 
     <td></td>
     <td></td>
     <td><button type="button" id="GuessButton-weapon" onclick="test_function(dataButtons[2], 4, this)">Catalyst</button></td>
     <td><button type="button" id="GuessButton-region" onclick="test_function(dataButtons[3], 8, this)">Outlander</button></td>
-    <td></td>
+    <td><input type="text" id="down"></td>
 </tr>
 </table>
 <br>
@@ -165,8 +165,40 @@
                 btn.style.backgroundColor = "red";
                 break;
         }
+    }
 
-        document.getElementById("test").innerText = thing;
+    function version(thing, id, btn){
+        thing[id] += 1;
+        if (thing[id] == 2) thing[id] = 0;
+        
+        switch(thing[id]){
+            case 0:
+                btn.style.backgroundColor = "white";
+                break;
+            case 1:
+                btn.style.backgroundColor = "green";
+                break;
+        }
+    }
+
+    function diference(i){
+        if(dataButtons[4][0] == 1 && dataButtons[4][2] == 1){
+            var upVersion = document.getElementById("up").value;
+            var downVersion = document.getElementById("down").value;
+            return Characters[i][6] > parseFloat(upVersion) && Characters[i][6] < parseFloat(downVersion);
+        }
+        if(dataButtons[4][0] == 1){
+            var upVersion = document.getElementById("up").value;
+            return Characters[i][6] > parseFloat(upVersion);
+        }
+        if(dataButtons[4][1] == 1){
+            var equaleVersion = document.getElementById("equale").value;
+            return Characters[i][6] == parseFloat(equaleVersion);
+        }
+        if(dataButtons[4][2] == 1){
+            var downVersion = document.getElementById("down").value;
+            return Characters[i][6] < parseFloat(downVersion);
+        }
     }
 
     function PrintTable() {
@@ -185,6 +217,9 @@
                         canPrint = false;
                     }
                 }
+            } 
+            if(!diference(i)){
+                canPrint = false;
             }
             if(canPrint){
                 let row = table.insertRow();
@@ -195,7 +230,6 @@
             }
         }
     }
-
   </script>
 </body>
 </html>
