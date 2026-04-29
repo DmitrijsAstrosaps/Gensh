@@ -28,9 +28,9 @@ let dataNames = [
 ];
 
 let dataButtons = [
-    [0, 0], // 4 star, 5 star
-    [0, 0, 0, 0, 0, 0, 0], // Anemo, Geo, Electro, Dendro, Hydro, Pyro, Cryo
-    [0, 0, 0, 0, 0], // Sword, Claymore, Polearm, Bow, Catalyst
+    [0, 0],                     // 4 star, 5 star
+    [0, 0, 0, 0, 0, 0, 0],      // Anemo, Geo, Electro, Dendro, Hydro, Pyro, Cryo
+    [0, 0, 0, 0, 0],            // Sword, Claymore, Polearm, Bow, Catalyst
     [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
 ];
 
@@ -66,13 +66,13 @@ function diference(i){
     if(!isNaN(upVersion) && !isNaN(downVersion) ){
         return Characters[i][6] > upVersion && Characters[i][6] < downVersion;
     }
-    if(!isNaN(upVersion) ){
+    if(!isNaN(upVersion)){
         return Characters[i][6] > upVersion;
     }
-    if(!isNaN(equaleVersion) ){
+    if(!isNaN(equaleVersion)){
         return Characters[i][6] == equaleVersion;
     }
-    if(!isNaN(downVersion) ){
+    if(!isNaN(downVersion)){
         return Characters[i][6] < downVersion;
     }
 }
