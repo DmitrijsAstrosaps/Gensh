@@ -38,6 +38,9 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("up").addEventListener("input", PrintTable);
     document.getElementById("down").addEventListener("input", PrintTable);
     document.getElementById("equale").addEventListener("input", PrintTable);
+    document.getElementById("up").value = "";
+    document.getElementById("down").value = "";
+    document.getElementById("equale").value = "";
 });
 
 function test_function(thing, id, btn){
