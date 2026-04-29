@@ -51,6 +51,7 @@ function test_function(thing, id, btn){
             btn.style.backgroundColor = "red";
             break;
     }
+    PrintTable();
 }
 
 function version(thing, id, btn){
