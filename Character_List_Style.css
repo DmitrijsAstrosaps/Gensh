@@ -10,15 +10,15 @@ h1 {
 table, th, td {
         border:1px solid white;
 }
-button {
-        background-color: white;
-        color: black;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-}
 .centerTable {
         margin-left: auto;
         margin-right: auto;
+}
+.imageSize {
+        width: 60px;
+        height: 60px;
+}
+.raritySize {
+        width: 150px;
+        height: 60px;
 }

@@ -46,13 +46,13 @@ function test_function(thing, id, btn){
     
     switch(thing[id]){
         case 0:
-            btn.style.backgroundColor = "white";
+            btn.style.backgroundColor = null;
             break;
         case 1:
-            btn.style.backgroundColor = "green";
+            btn.style.backgroundColor = "rgb(48, 193, 48)";
             break;
         case 2:
-            btn.style.backgroundColor = "red";
+            btn.style.backgroundColor = "rgb(255, 60, 60)";
             break;
     }
     PrintTable();
