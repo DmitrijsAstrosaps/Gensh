@@ -1,6 +1,5 @@
 let Characters = [];
 
-
 async function loadCharacters() {
     const response = await fetch('Character_List.csv');
     const data = await response.text();
@@ -32,9 +31,14 @@ let dataButtons = [
     [0, 0], // 4 star, 5 star
     [0, 0, 0, 0, 0, 0, 0], // Anemo, Geo, Electro, Dendro, Hydro, Pyro, Cryo
     [0, 0, 0, 0, 0], // Sword, Claymore, Polearm, Bow, Catalyst
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
-    [0, 0, 0] // up, equale, down
+    [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
 ];
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("up").addEventListener("input", PrintTable);
+    document.getElementById("down").addEventListener("input", PrintTable);
+    document.getElementById("equale").addEventListener("input", PrintTable);
+});
 
 function test_function(thing, id, btn){
     thing[id] += 1;
@@ -54,37 +58,22 @@ function test_function(thing, id, btn){
     PrintTable();
 }
 
-function version(thing, id, btn){
-    thing[id] += 1;
-    if (thing[id] == 2) thing[id] = 0;
-    
-    switch(thing[id]){
-        case 0:
-            btn.style.backgroundColor = "white";
-            break;
-        case 1:
-            btn.style.backgroundColor = "green";
-            break;
-    }
-}
-
 function diference(i){
-    if(dataButtons[4][0] == 1 && dataButtons[4][2] == 1){
-        var upVersion = document.getElementById("up").value;
-        var downVersion = document.getElementById("down").value;
-        return Characters[i][6] > parseFloat(upVersion) && Characters[i][6] < parseFloat(downVersion);
+    var upVersion = parseFloat(document.getElementById("up").value);
+    var downVersion = parseFloat(document.getElementById("down").value);
+    var equaleVersion = parseFloat(document.getElementById("equale").value);
+
+    if(!isNaN(upVersion) && !isNaN(downVersion) ){
+        return Characters[i][6] > upVersion && Characters[i][6] < downVersion;
     }
-    if(dataButtons[4][0] == 1){
-        var upVersion = document.getElementById("up").value;
-        return Characters[i][6] > parseFloat(upVersion);
+    if(!isNaN(upVersion) ){
+        return Characters[i][6] > upVersion;
     }
-    if(dataButtons[4][1] == 1){
-        var equaleVersion = document.getElementById("equale").value;
-        return Characters[i][6] == parseFloat(equaleVersion);
+    if(!isNaN(equaleVersion) ){
+        return Characters[i][6] == equaleVersion;
     }
-    if(dataButtons[4][2] == 1){
-        var downVersion = document.getElementById("down").value;
-        return Characters[i][6] < parseFloat(downVersion);
+    if(!isNaN(downVersion) ){
+        return Characters[i][6] < downVersion;
     }
 }
 
@@ -95,7 +84,7 @@ function PrintTable() {
     }
     for(let i = 0; i < Characters.length; i++){
         let canPrint = true;
-        for(let j = 0; j < dataButtons.length-1; j++){
+        for(let j = 0; j < dataButtons.length; j++){
             for(let k = 0; k < dataButtons[j].length; k++){
                 if(dataButtons[j][k] == 2 && Characters[i][j+2] == dataNames[j][k]){
                     canPrint = false;
