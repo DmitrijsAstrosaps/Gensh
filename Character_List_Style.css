@@ -7,9 +7,13 @@ body {
 h1 {
       margin-top: 20px;
 }
-table, th, td {
-        border:1px solid white;
+#Trysss {
+table, th, td{
+        border:1px solid white; 
+        border-collapse: collapse;
 }
+}
+
 .centerTable {
         margin-left: auto;
         margin-right: auto;
@@ -19,6 +23,6 @@ table, th, td {
         height: 60px;
 }
 .raritySize {
-        width: 150px;
+        width: 215px;
         height: 60px;
 }
