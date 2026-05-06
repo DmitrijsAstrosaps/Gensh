@@ -122,12 +122,12 @@ function PrintTable() {
             weaponsCount[dataNames[2].indexOf(char[4])]++;
             regionsCount[dataNames[3].indexOf(char[5])]++;
     }
-    max[0] = elementsCount.indexOf(Math.max(...elementsCount));
-    max[1] = weaponsCount.indexOf(Math.max(...weaponsCount));
-    max[2] = regionsCount.indexOf(Math.max(...regionsCount));
-    max[3] = Math.max(...elementsCount);
-    max[4] = Math.max(...weaponsCount);
-    max[5] = Math.max(...regionsCount);
+    max = [elementsCount.indexOf(Math.max(...elementsCount)),
+            weaponsCount.indexOf(Math.max(...weaponsCount)),
+            regionsCount.indexOf(Math.max(...regionsCount)),
+            Math.max(...elementsCount),
+            Math.max(...weaponsCount),
+            Math.max(...regionsCount)]
 
     let elementIndex = [max[3], max[4], max[5]];
     elementIndex.sort(function(a, b){return b - a});
@@ -160,9 +160,10 @@ function PrintTable() {
     }
     const suggestion = document.getElementById("bestParam");
     // suggestion.innerHTML = `Best guess: ${elementIndex},${(max[elementIndex-2])},${weaponsCount.indexOf(max[elementIndex-1])},${regionsCount.indexOf(max[elementIndex])}`;
-    if(bestCharacter.length > 0) suggestion.innerHTML = `Best guess: ${bestCharacter[Math.round((bestCharacter.length-1) / 2)][1]}`;
+    if(bestCharacter.length > 0) suggestion.innerHTML = `Best guess: ${bestCharacter[Math.floor((bestCharacter.length-1) / 2)][1]}`;
     else suggestion.innerHTML = "No characters found";
     // suggestion.innerHTML += `<br>Total characters found: ${bestCharacter}`;
+    // suggestion.innerHTML += `<br>Total characters found: ${bestCharacter.length}`;
     // suggestion.innerHTML += `<br>Best guess index: ${elementIndex}`;
     // suggestion.innerHTML += `<br>Best guess name: ${dataNames[elementIndex-2][max[elementIndex-3]]} (${max[elementIndex]} characters)`;
     // suggestion.innerHTML += `<br>Best guess element: ${dataNames[1][elementsCount.indexOf(max[3])]} (${max[3]} characters)`;
