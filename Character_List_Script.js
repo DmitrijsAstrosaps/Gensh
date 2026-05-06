@@ -129,16 +129,40 @@ function PrintTable() {
     max[4] = Math.max(...weaponsCount);
     max[5] = Math.max(...regionsCount);
 
-    let elementIndex = max.indexOf(Math.max(max[3], max[4], max[5]), 3);
+    let elementIndex = [max[3], max[4], max[5]];
+    elementIndex.sort(function(a, b){return b - a});
+    let index = 0;
     for (let i = 0; i < filtered.length; i++) {
-        if (filtered[i][elementIndex] == dataNames[elementIndex-2][max[elementIndex-3]]) {
-            bestCharacter.push(filtered[i]);
+        if (elementIndex[0] !== filtered.length){
+            index = max.indexOf(elementIndex[0], 3);
+            if (filtered[i][index] == dataNames[index-2][max[index-3]]) {
+                bestCharacter.push(filtered[i]);
+            }
+        }
+        else if (elementIndex[1] !== filtered.length){
+            index = max.indexOf(elementIndex[1], 3);
+            if (filtered[i][index] == dataNames[index-2][max[index-3]]) {
+                bestCharacter.push(filtered[i]);
+            }
+        }
+        else if (elementIndex[2] !== filtered.length){
+            index = max.indexOf(elementIndex[2], 3);
+            if (filtered[i][index] == dataNames[index-2][max[index-3]]) {
+                bestCharacter.push(filtered[i]);
+            }
+        }
+        else {
+            index = max.indexOf(elementIndex[0], 3);
+            if (filtered[i][index] == dataNames[index-2][max[index-3]]) {
+                bestCharacter.push(filtered[i]);
+            }
         }
     }
     const suggestion = document.getElementById("bestParam");
     // suggestion.innerHTML = `Best guess: ${elementIndex},${(max[elementIndex-2])},${weaponsCount.indexOf(max[elementIndex-1])},${regionsCount.indexOf(max[elementIndex])}`;
-    if(bestCharacter.length > 0) suggestion.innerHTML = `Best guess: ${bestCharacter[Math.round((bestCharacter.length-1) / 2)][1]}.`;
-    else suggestion.innerHTML = "No characters found.";
+    if(bestCharacter.length > 0) suggestion.innerHTML = `Best guess: ${bestCharacter[Math.round((bestCharacter.length-1) / 2)][1]}`;
+    else suggestion.innerHTML = "No characters found";
+    // suggestion.innerHTML += `<br>Total characters found: ${bestCharacter}`;
     // suggestion.innerHTML += `<br>Best guess index: ${elementIndex}`;
     // suggestion.innerHTML += `<br>Best guess name: ${dataNames[elementIndex-2][max[elementIndex-3]]} (${max[elementIndex]} characters)`;
     // suggestion.innerHTML += `<br>Best guess element: ${dataNames[1][elementsCount.indexOf(max[3])]} (${max[3]} characters)`;
