@@ -81,6 +81,7 @@ function diference(i){
 }
 
 function PrintTable() {
+    let filtered = [];
     var table = document.getElementById("Trysss");
     while (table.rows.length > 1) {
         table.deleteRow(1);
@@ -101,6 +102,7 @@ function PrintTable() {
             canPrint = false;
         }
         if(canPrint){
+            filtered.push(Characters[i]);
             let row = table.insertRow();
             for(let j = 0; j < Characters[i].length; j++){
                 let cell = row.insertCell();
@@ -108,4 +110,27 @@ function PrintTable() {
             }
         }
     }
+    let bestCharacter = [];
+    let elementsCount = [0, 0, 0, 0, 0, 0, 0];
+    let weaponsCount = [0, 0, 0, 0, 0];
+    let regionsCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let max = [0, 0, 0, 0, 0, 0];
+
+    for (let i = 0; i < filtered.length; i++) {
+            let char = filtered[i];
+            elementsCount[dataNames[1].indexOf(char[3])]++;
+            weaponsCount[dataNames[2].indexOf(char[4])]++;
+            regionsCount[dataNames[3].indexOf(char[5])]++;
+    }
+    max[3] = Math.max(...elementsCount);
+    max[4] = Math.max(...weaponsCount);
+    max[5] = Math.max(...regionsCount);
+
+    for (let i = 0; i < filtered.length; i++) {
+        if (filtered[i][3] === dataNames[1][elementsCount.indexOf(max[3])]) {
+            bestCharacter.push(filtered[i]);
+        }
+    }
+    const suggestion = document.getElementById("bestParam");
+    suggestion.innerHTML = `Best guess: ${bestCharacter[Math.round((bestCharacter.length-1) / 2)][1]}` + `<br>${max[3]}`+`<br>${max[4]}`+`<br>${max[5]}`;
 }
