@@ -66,14 +66,14 @@ function diference(i){
     var downVersion = parseFloat(document.getElementById("down").value);
     var equaleVersion = parseFloat(document.getElementById("equale").value);
 
+    if(!isNaN(equaleVersion)){
+        return Characters[i][6] == equaleVersion;
+    }
     if(!isNaN(upVersion) && !isNaN(downVersion) ){
         return Characters[i][6] > upVersion && Characters[i][6] < downVersion;
     }
     if(!isNaN(upVersion)){
         return Characters[i][6] > upVersion;
-    }
-    if(!isNaN(equaleVersion)){
-        return Characters[i][6] == equaleVersion;
     }
     if(!isNaN(downVersion)){
         return Characters[i][6] < downVersion;
@@ -122,15 +122,27 @@ function PrintTable() {
             weaponsCount[dataNames[2].indexOf(char[4])]++;
             regionsCount[dataNames[3].indexOf(char[5])]++;
     }
+    max[0] = elementsCount.indexOf(Math.max(...elementsCount));
+    max[1] = weaponsCount.indexOf(Math.max(...weaponsCount));
+    max[2] = regionsCount.indexOf(Math.max(...regionsCount));
     max[3] = Math.max(...elementsCount);
     max[4] = Math.max(...weaponsCount);
     max[5] = Math.max(...regionsCount);
 
+    let elementIndex = max.indexOf(Math.max(max[3], max[4], max[5]), 3);
     for (let i = 0; i < filtered.length; i++) {
-        if (filtered[i][3] === dataNames[1][elementsCount.indexOf(max[3])]) {
+        if (filtered[i][elementIndex] == dataNames[elementIndex-2][max[elementIndex-3]]) {
             bestCharacter.push(filtered[i]);
         }
     }
     const suggestion = document.getElementById("bestParam");
-    suggestion.innerHTML = `Best guess: ${bestCharacter[Math.round((bestCharacter.length-1) / 2)][1]}` + `<br>${max[3]}`+`<br>${max[4]}`+`<br>${max[5]}`;
+    // suggestion.innerHTML = `Best guess: ${elementIndex},${(max[elementIndex-2])},${weaponsCount.indexOf(max[elementIndex-1])},${regionsCount.indexOf(max[elementIndex])}`;
+    if(bestCharacter.length > 0) suggestion.innerHTML = `Best guess: ${bestCharacter[Math.round((bestCharacter.length-1) / 2)][1]}.`;
+    else suggestion.innerHTML = "No characters found.";
+    // suggestion.innerHTML += `<br>Best guess index: ${elementIndex}`;
+    // suggestion.innerHTML += `<br>Best guess name: ${dataNames[elementIndex-2][max[elementIndex-3]]} (${max[elementIndex]} characters)`;
+    // suggestion.innerHTML += `<br>Best guess element: ${dataNames[1][elementsCount.indexOf(max[3])]} (${max[3]} characters)`;
+    // suggestion.innerHTML += `<br>Best guess weapon: ${dataNames[2][weaponsCount.indexOf(max[4])]} (${max[4]} characters)`;
+    // suggestion.innerHTML += `<br>Best guess region: ${dataNames[3][regionsCount.indexOf(max[5])]} (${max[5]} characters)`;
+    // suggestion.innerHTML += `<br>Total characters found: ${max[elementIndex-3]}`;
 }
