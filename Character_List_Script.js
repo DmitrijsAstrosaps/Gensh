@@ -120,10 +120,15 @@ function getBestGuess(filtered){
 
     let bestCharacter = bestCharacters[Math.floor(bestCharacters.length / 2)];
 
+    if(bestCharacter == undefined){
+        bestCharacter = ["", "No character found", "", "", "", "", ""];
+        bestScore = 0;
+    }
+
     document.getElementById("bestImage").src = "images/Characters_Icons/" + bestCharacter[1] + "_icon.webp";
     document.getElementById("bestName").innerText = bestCharacter[1];
     document.getElementById("bestScore").innerText = bestScore;
-    document.getElementById("bestCount").innerText = bestCharacters.length;
+    document.getElementById("bestCount").innerText = filtered.length;
 
     document.getElementById("bestElement").innerText = "Element: " + bestCharacter[3];
     document.getElementById("bestWeapon").innerText = "Weapon: " + bestCharacter[4];
@@ -170,4 +175,23 @@ function PrintTable() {
         }
     }
     getBestGuess(filtered);
+}
+function reset(){
+    dataButtons = [
+        [0, 0],                     // 4 star, 5 star
+        [0, 0, 0, 0, 0, 0, 0],      // Anemo, Geo, Electro, Dendro, Hydro, Pyro, Cryo
+        [0, 0, 0, 0, 0],            // Sword, Claymore, Polearm, Bow, Catalyst
+        [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
+    ];
+    document.querySelectorAll(".imageSize").forEach(btn => btn.style.backgroundColor = null);
+    document.querySelectorAll(".raritySize").forEach(btn => btn.style.backgroundColor = null);
+
+    getBestGuess([]);
+    var table = document.getElementById("Trysss");
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+    document.getElementById("up").value = "";
+    document.getElementById("down").value = "";
+    document.getElementById("equale").value = "";
 }
