@@ -117,7 +117,7 @@ function getBestGuess(filtered){
     }
 
     bestCharacters.sort((a, b) => a[6] - b[6]);
-
+    
     let bestCharacter = bestCharacters[Math.floor(bestCharacters.length / 2)];
 
     if(bestCharacter == undefined){
