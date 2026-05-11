@@ -120,6 +120,7 @@ function getBestGuess(filtered){
 
     let bestCharacter = bestCharacters[Math.floor(bestCharacters.length / 2)];
 
+    document.getElementById("bestImage").src = "images/Characters_Icons/" + bestCharacter[1] + "_icon.webp";
     document.getElementById("bestName").innerText = bestCharacter[1];
     document.getElementById("bestScore").innerText = bestScore;
     document.getElementById("bestCount").innerText = bestCharacters.length;
@@ -156,6 +157,14 @@ function PrintTable() {
             let row = table.insertRow();
             for(let j = 0; j < Characters[i].length; j++){
                 let cell = row.insertCell();
+                if (j == 0) {
+                    let img = document.createElement("img");
+                    img.src = "images/Characters_Icons/" + Characters[i][1] + "_icon.webp";
+                    img.alt = Characters[i][1];
+                    img.className = "imageSize";
+                    cell.appendChild(img);
+                    continue;
+                }
                 cell.innerText = Characters[i][j];
             }
         }
