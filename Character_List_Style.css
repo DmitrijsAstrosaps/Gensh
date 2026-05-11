@@ -26,3 +26,17 @@ table, th, td{
         width: 215px;
         height: 60px;
 }
+.wrapper {
+        position: relative;
+        width: fit-content;
+        margin: 0 auto;
+}
+#bestParam {
+        position: absolute;
+        left: 85%;
+        top: 20%;
+        margin-left: 20px;
+        background-color: lemonchiffon;
+        color: black;
+        padding: 5px 15px;
+}

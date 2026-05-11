@@ -11,73 +11,76 @@
   <h1>Character Guesser</h1>
 
   <h2>Auto-guesser the character from Genshin Impact</h2>
-
-<table class="centerTable", id="ToMuchButtons">
-<tr>
-    <td></td> 
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/81/Icon_Sword.png" alt="Sword" id="weapon-sword" class="imageSize" onclick="test_function(dataButtons[2], 0, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/c/ce/Mondstadt_Emblem_Night.png" alt="Mondstadt" id="region-mondstadt" class="imageSize" onclick="test_function(dataButtons[3], 0, this)"></td>
-    <td></td>
-</tr>
-<tr>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/a/a4/Element_Anemo.png" alt="Anemo" id="element-anemo" class="imageSize" onclick="test_function(dataButtons[1], 0, this)"></td>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/c/c3/Liyue_Emblem_Night.png" alt="Liyue" id="region-liyue" class="imageSize" onclick="test_function(dataButtons[3], 1, this)"></td>
-    <td><label>Down:</label><br><input type="text" id="down"></td>
-</tr>
-<tr>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/4/4a/Element_Geo.png" alt="Geo" id="element-geo" class="imageSize" onclick="test_function(dataButtons[1], 1, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/6/66/Icon_Claymore.png" alt="Claymore" id="weapon-claymore" class="imageSize" onclick="test_function(dataButtons[2], 1, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Inazuma_Emblem_Night.png" alt="Inazuma" id="region-inazuma" class="imageSize" onclick="test_function(dataButtons[3], 2, this)"></td>
-    <td></td>
-</tr>
-<tr>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/7/77/Icon_4_Stars.png" alt="4 stars" id="rarity-4" class="raritySize" onclick="test_function(dataButtons[0], 0, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/7/73/Element_Electro.png" alt="Electro" id="element-electro" class="imageSize" onclick="test_function(dataButtons[1], 2, this)"></td>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/e/ef/Sumeru_Emblem_Night.png" alt="Sumeru" id="region-sumeru" class="imageSize" onclick="test_function(dataButtons[3], 3, this)"></td>
-    <td></td>
-</tr>
-<tr>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/f/f4/Element_Dendro.png" alt="Dendro" id="element-dendro" class="imageSize" onclick="test_function(dataButtons[1], 3, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/6/6a/Icon_Polearm.png" alt="Polearm" id="weapon-polearm" class="imageSize" onclick="test_function(dataButtons[2], 2, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/0/06/Fontaine_Emblem_Night.png" alt="Fontaine" id="region-fontaine" class="imageSize" onclick="test_function(dataButtons[3], 4, this)"></td>
-    <td><label>Equale:</label><br><input type="text" id="equale"></td>
-</tr>
-<tr>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/2/2b/Icon_5_Stars.png" alt="5 stars" id="rarity-5" class="raritySize" onclick="test_function(dataButtons[0], 1, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/3/35/Element_Hydro.png" alt="Hydro" id="element-hydro" class="imageSize" onclick="test_function(dataButtons[1], 4, this)"></td> 
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/3/34/Natlan_Emblem_Night.png" alt="Natlan" id="region-natlan" class="imageSize" onclick="test_function(dataButtons[3], 5, this)"></td>
-    <td></td>
-</tr>
-<tr>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/e/e8/Element_Pyro.png" alt="Pyro" id="element-pyro" class="imageSize" onclick="test_function(dataButtons[1], 5, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/81/Icon_Bow.png" alt="Bow" id="weapon-bow" class="imageSize" onclick="test_function(dataButtons[2], 3, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/4/4e/Nod-Krai_Emblem_Night.png" alt="Nod-Krai" id="region-nod-krai" class="imageSize" onclick="test_function(dataButtons[3], 6, this)"></td>
-    <td></td>
-</tr>
-<tr>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/88/Element_Cryo.png" alt="Cryo" id="element-cryo" class="imageSize" onclick="test_function(dataButtons[1], 6, this)"></td>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/8d/Snezhnaya_New_Emblem.png" alt="Snezhnaya" id="region-snezhnaya" class="imageSize" onclick="test_function(dataButtons[3], 7, this)"></td>
-    <td><label>Up:</label><br><input type="text" id="up"></td>
-</tr>
-<tr> 
-    <td></td>
-    <td></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/2/27/Icon_Catalyst.png" alt="Catalyst" id="weapon-catalyst" class="imageSize" onclick="test_function(dataButtons[2], 4, this)"></td>
-    <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/6/69/Emblem_Nation_Unknown_White.png" alt="Outlander" id="region-outlander" class="imageSize" onclick="test_function(dataButtons[3], 8, this)"></td>
-    <td></td>
-</tr>
-</table>
-<div id="bestParam"></div>
+<div id="wrapper">
+    <div id="table-container">
+        <table class="centerTable" id="ToMuchButtons">
+        <tr>
+            <td></td> 
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/81/Icon_Sword.png" alt="Sword" id="weapon-sword" class="imageSize" onclick="test_function(dataButtons[2], 0, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/c/ce/Mondstadt_Emblem_Night.png" alt="Mondstadt" id="region-mondstadt" class="imageSize" onclick="test_function(dataButtons[3], 0, this)"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/a/a4/Element_Anemo.png" alt="Anemo" id="element-anemo" class="imageSize" onclick="test_function(dataButtons[1], 0, this)"></td>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/c/c3/Liyue_Emblem_Night.png" alt="Liyue" id="region-liyue" class="imageSize" onclick="test_function(dataButtons[3], 1, this)"></td>
+            <td><label>Down:</label><br><input type="text" id="down"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/4/4a/Element_Geo.png" alt="Geo" id="element-geo" class="imageSize" onclick="test_function(dataButtons[1], 1, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/6/66/Icon_Claymore.png" alt="Claymore" id="weapon-claymore" class="imageSize" onclick="test_function(dataButtons[2], 1, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/a/a5/Inazuma_Emblem_Night.png" alt="Inazuma" id="region-inazuma" class="imageSize" onclick="test_function(dataButtons[3], 2, this)"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/7/77/Icon_4_Stars.png" alt="4 stars" id="rarity-4" class="raritySize" onclick="test_function(dataButtons[0], 0, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/7/73/Element_Electro.png" alt="Electro" id="element-electro" class="imageSize" onclick="test_function(dataButtons[1], 2, this)"></td>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/e/ef/Sumeru_Emblem_Night.png" alt="Sumeru" id="region-sumeru" class="imageSize" onclick="test_function(dataButtons[3], 3, this)"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/f/f4/Element_Dendro.png" alt="Dendro" id="element-dendro" class="imageSize" onclick="test_function(dataButtons[1], 3, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/6/6a/Icon_Polearm.png" alt="Polearm" id="weapon-polearm" class="imageSize" onclick="test_function(dataButtons[2], 2, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/0/06/Fontaine_Emblem_Night.png" alt="Fontaine" id="region-fontaine" class="imageSize" onclick="test_function(dataButtons[3], 4, this)"></td>
+            <td><label>Equale:</label><br><input type="text" id="equale"></td>
+        </tr>
+        <tr>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/2/2b/Icon_5_Stars.png" alt="5 stars" id="rarity-5" class="raritySize" onclick="test_function(dataButtons[0], 1, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/3/35/Element_Hydro.png" alt="Hydro" id="element-hydro" class="imageSize" onclick="test_function(dataButtons[1], 4, this)"></td> 
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/3/34/Natlan_Emblem_Night.png" alt="Natlan" id="region-natlan" class="imageSize" onclick="test_function(dataButtons[3], 5, this)"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/e/e8/Element_Pyro.png" alt="Pyro" id="element-pyro" class="imageSize" onclick="test_function(dataButtons[1], 5, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/81/Icon_Bow.png" alt="Bow" id="weapon-bow" class="imageSize" onclick="test_function(dataButtons[2], 3, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/4/4e/Nod-Krai_Emblem_Night.png" alt="Nod-Krai" id="region-nod-krai" class="imageSize" onclick="test_function(dataButtons[3], 6, this)"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/88/Element_Cryo.png" alt="Cryo" id="element-cryo" class="imageSize" onclick="test_function(dataButtons[1], 6, this)"></td>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/8/8d/Snezhnaya_New_Emblem.png" alt="Snezhnaya" id="region-snezhnaya" class="imageSize" onclick="test_function(dataButtons[3], 7, this)"></td>
+            <td><label>Up:</label><br><input type="text" id="up"></td>
+        </tr>
+        <tr> 
+            <td></td>
+            <td></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/2/27/Icon_Catalyst.png" alt="Catalyst" id="weapon-catalyst" class="imageSize" onclick="test_function(dataButtons[2], 4, this)"></td>
+            <td><img src="https://static.wikia.nocookie.net/gensin-impact/images/6/69/Emblem_Nation_Unknown_White.png" alt="Outlander" id="region-outlander" class="imageSize" onclick="test_function(dataButtons[3], 8, this)"></td>
+            <td></td>
+        </tr>
+        </table>
+    </div>
+    <div id="bestParam">Ticket</div>
+</div>
 <br>
 <table style="width:100%" id="Trysss">
     <tr>
