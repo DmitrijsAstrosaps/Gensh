@@ -99,13 +99,6 @@ function getCharacterScore(char, filtered){
 
 function getBestGuess(filtered){
 
-    const suggestion = document.getElementById("bestParam");
-
-    if(filtered.length === 0){
-        suggestion.innerHTML = "No characters found";
-        return;
-    }
-
     let bestCharacters = [];
     let bestScore = -1;
 
@@ -127,12 +120,14 @@ function getBestGuess(filtered){
 
     let bestCharacter = bestCharacters[Math.floor(bestCharacters.length / 2)];
 
-    suggestion.innerHTML = `Best guess: ${bestCharacter[1]}`;
+    document.getElementById("bestName").innerText = bestCharacter[1];
+    document.getElementById("bestScore").innerText = bestScore;
+    document.getElementById("bestCount").innerText = bestCharacters.length;
 
-    suggestion.innerHTML += `<br>Score: ${bestScore}`;
-
-    suggestion.innerHTML += `<br>Candidates: ${bestCharacters.length}`;
-    suggestion.innerHTML += `<br>${bestCharacters.map(c => c[1]).join(", ")}`;
+    document.getElementById("bestElement").innerText = "Element: " + bestCharacter[3];
+    document.getElementById("bestWeapon").innerText = "Weapon: " + bestCharacter[4];
+    document.getElementById("bestRegion").innerText = "Region: " + bestCharacter[5];
+    document.getElementById("bestVersion").innerText = "Version: " + bestCharacter[6];
 }
 
 function PrintTable() {
