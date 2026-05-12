@@ -96,8 +96,10 @@ function getCharacterScore(char, filtered){
         if(char[4] === other[4]) score += weights.weapon;
         if(char[5] === other[5]) score += weights.region;
     }
-    let finalScore = Math.round(score * 0.8 + Math.log2(char[7]+1) * 0.2) / 100;
-
+    let totalGames = sumColumn(7);
+    let confidence = Math.min(totalGames / 100, 1);
+    let finalScore = Math.round((score *(1 - confidence * 0.2) + char[7] * confidence * 0.2) * 100) / 100;
+    // console.log(`Character: ${char[1]}, Score: ${finalScore}`);
     return finalScore;
 }
 
@@ -125,7 +127,7 @@ function getBestGuess(filtered){
     let bestCharacter = bestCharacters[Math.floor(bestCharacters.length / 2)];
 
     if(bestCharacter == undefined){
-        bestCharacter = ["", "No character found", "", "", "", "", ""];
+        bestCharacter = ["", "No character found", "", "", "", "", "", ""];
         bestScore = 0;
     }
 
@@ -138,6 +140,7 @@ function getBestGuess(filtered){
     document.getElementById("bestWeapon").innerText = "Weapon: " + bestCharacter[4];
     document.getElementById("bestRegion").innerText = "Region: " + bestCharacter[5];
     document.getElementById("bestVersion").innerText = "Version: " + bestCharacter[6];
+    document.getElementById("frequency").innerText = "Frequency: " + bestCharacter[7];
 }
 
 function PrintTable() {
@@ -210,4 +213,12 @@ function printAll(){
         print.push(Characters[i][1] + " - " + Characters[i][7]);
     }
     console.log(print);
+}
+
+function sumColumn(column){
+    let sum = 0;
+    for(let i = 0; i < Characters.length; i++){
+        sum += Characters[i][column];
+    }
+    return sum;
 }
