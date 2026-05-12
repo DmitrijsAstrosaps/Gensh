@@ -13,7 +13,8 @@ async function loadCharacters() {
             cols[3],
             cols[4],
             cols[5],
-            parseFloat(cols[6])
+            parseFloat(cols[6]),
+            parseInt(cols[7]) || 0
         ];
     });
 }
@@ -33,6 +34,8 @@ let dataButtons = [
     [0, 0, 0, 0, 0],            // Sword, Claymore, Polearm, Bow, Catalyst
     [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
 ];
+
+let bestCharacters = [];
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("up").addEventListener("input", PrintTable);
@@ -93,13 +96,14 @@ function getCharacterScore(char, filtered){
         if(char[4] === other[4]) score += weights.weapon;
         if(char[5] === other[5]) score += weights.region;
     }
+    let finalScore = Math.round(score * 0.8 + Math.log2(char[7]+1) * 0.2) / 100;
 
-    return score;
+    return finalScore;
 }
 
 function getBestGuess(filtered){
 
-    let bestCharacters = [];
+    bestCharacters = [];
     let bestScore = -1;
 
     for(let i = 0; i < filtered.length; i++){
@@ -160,7 +164,7 @@ function PrintTable() {
         if(canPrint){
             filtered.push(Characters[i]);
             let row = table.insertRow();
-            for(let j = 0; j < Characters[i].length; j++){
+            for(let j = 0; j < Characters[i].length-1; j++){
                 let cell = row.insertCell();
                 if (j == 0) {
                     let img = document.createElement("img");
@@ -186,6 +190,10 @@ function reset(){
     document.querySelectorAll(".imageSize").forEach(btn => btn.style.backgroundColor = null);
     document.querySelectorAll(".raritySize").forEach(btn => btn.style.backgroundColor = null);
 
+    if(bestCharacters.length > 0){
+        Characters[bestCharacters[0][0]-1][7] += 1; 
+    }
+
     getBestGuess([]);
     var table = document.getElementById("Trysss");
     while (table.rows.length > 1) {
@@ -194,4 +202,12 @@ function reset(){
     document.getElementById("up").value = "";
     document.getElementById("down").value = "";
     document.getElementById("equale").value = "";
+}
+
+function printAll(){
+    let print = [];
+    for(let i = 0; i < Characters.length; i++){
+        print.push(Characters[i][1] + " - " + Characters[i][7]);
+    }
+    console.log(print);
 }
