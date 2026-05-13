@@ -96,11 +96,11 @@ function getCharacterScore(char, filtered){
         if(char[4] === other[4]) score += weights.weapon;
         if(char[5] === other[5]) score += weights.region;
     }
-    let totalGames = sumColumn(7);
-    let confidence = Math.min(totalGames / 100, 1);
-    let finalScore = Math.round((score *(1 - confidence * 0.2) + char[7] * confidence * 0.2) * 100) / 100;
+    // let totalGames = sumColumn(7);
+    // let confidence = Math.min(totalGames / 100, 1);
+    // let finalScore = Math.round((score *(1 - confidence * 0.2) + char[7] * confidence * 0.2) * 100) / 100;
     // console.log(`Character: ${char[1]}, Score: ${finalScore}`);
-    return finalScore;
+    return score;
 }
 
 function getBestGuess(filtered){
