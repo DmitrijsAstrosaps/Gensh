@@ -145,7 +145,7 @@ function getBestGuess(filtered){
 
 function PrintTable() {
     let filtered = [];
-    var table = document.getElementById("Trysss");
+    var table = document.querySelector("#Trysss tbody");
     while (table.rows.length > 1) {
         table.deleteRow(1);
     }

@@ -7,12 +7,25 @@ body {
 h1 {
       margin-top: 20px;
 }
-#Trysss {
-table, th, td{
-        border:1px solid white; 
-        border-collapse: collapse;
-        text-align: center;
+.tableWrapper {
+        max-height: 700px;
+        overflow-y: auto;
+        border: 2px solid white;
+        border-radius: 10px;
 }
+#Trysss thead th {
+        position: sticky;
+        top: 0;
+        background-color: black;
+        z-index: 10;
+        padding: 10px;
+}
+.tableWrapper::-webkit-scrollbar {
+        width: 10px;
+}
+.tableWrapper::-webkit-scrollbar-thumb {
+        background-color: #999;
+        border-radius: 10px;
 }
 .centerTable {
         margin-left: auto;
