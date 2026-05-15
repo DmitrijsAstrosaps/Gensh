@@ -37,14 +37,14 @@ let dataButtons = [
 
 let bestCharacters = [];
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("up").addEventListener("input", PrintTable);
-    document.getElementById("down").addEventListener("input", PrintTable);
-    document.getElementById("equale").addEventListener("input", PrintTable);
-    document.getElementById("up").value = "";
-    document.getElementById("down").value = "";
-    document.getElementById("equale").value = "";
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//     document.getElementById("up").addEventListener("input", PrintTable);
+//     document.getElementById("down").addEventListener("input", PrintTable);
+//     document.getElementById("equale").addEventListener("input", PrintTable);
+//     document.getElementById("up").value = "";
+//     document.getElementById("down").value = "";
+//     document.getElementById("equale").value = "";
+// });
 
 function test_function(thing, id, btn){
     thing[id] += 1;
@@ -202,9 +202,9 @@ function reset(){
     while (table.rows.length > 1) {
         table.deleteRow(1);
     }
-    document.getElementById("up").value = "";
-    document.getElementById("down").value = "";
-    document.getElementById("equale").value = "";
+    // document.getElementById("up").value = "";
+    // document.getElementById("down").value = "";
+    // document.getElementById("equale").value = "";
 }
 
 function printAll(){
@@ -221,4 +221,44 @@ function sumColumn(column){
         sum += Characters[i][column];
     }
     return sum;
+}
+
+function createTable(){
+    var table = document.querySelector("#Trysss tbody");
+
+    for(let i = 0; i < Characters.length; i++){
+        let row = table.insertRow();
+        for(let j = 0; j < Characters[i].length-1; j++){
+            let cell = row.insertCell();
+            if (j == 0) {
+                let img = document.createElement("img");
+                img.src = "images/Characters_Icons/" + Characters[i][1] + "_icon.webp";
+                img.alt = Characters[i][1];
+                img.className = "imageSize";
+                img.addEventListener("click", function() {
+                    addImageToTable(Characters[i]);
+                });
+                cell.appendChild(img);
+                continue;
+            }
+            cell.innerText = Characters[i][j];
+        }
+    }
+}
+
+function addImageToTable(character){
+    let table = document.querySelector("#ToMuchButtons tbody");
+    let row = table.insertRow();
+    console.log(character);
+    for(let i = 2; i < 7; i++){
+        let cell = row.insertCell();
+        let img = document.createElement("img");
+        img.src = "images/" + character[i] + "_icon.webp";
+        img.alt = character[i];
+        img.className = "imageSize";
+        img.addEventListener("click", function() {
+            alert("You clicked on " + character[i]);
+        });
+        cell.appendChild(img);
+    }
 }
