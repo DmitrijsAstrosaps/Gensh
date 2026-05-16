@@ -35,22 +35,49 @@ let dataButtons = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
 ];
 
+let dataButtonsVersion = [];
+
 let bestCharacters = [];
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     document.getElementById("up").addEventListener("input", PrintTable);
-//     document.getElementById("down").addEventListener("input", PrintTable);
-//     document.getElementById("equale").addEventListener("input", PrintTable);
-//     document.getElementById("up").value = "";
-//     document.getElementById("down").value = "";
-//     document.getElementById("equale").value = "";
-// });
+function askYesNo(thing, id, btn){
+    dataButtons[thing][id]++;
+    if(dataButtons[thing][id] > 2) dataButtons[thing][id] = 0;
+    changeColor(dataButtons[thing][id], thing, btn.alt)
+    PrintTable();
+}
+function changeColor(color, thing, alt){
+    for (let i = 1; i < document.getElementById("ToMuchButtons").rows.length; i++){
+        let cellData = document.getElementById("ToMuchButtons").rows[i].cells[thing];
+        if (cellData.firstChild.alt == alt){
+            switch(color){
+                case 0:
+                    cellData.style.backgroundColor = null;
+                    break;
+                case 1:
+                    cellData.style.backgroundColor = "rgb(48, 193, 48)";
+                    break;
+                case 2:
+                    cellData.style.backgroundColor = "rgb(255, 60, 60)";
+                    break;
+            }
+        }
+    }
+}
 
-function test_function(thing, id, btn){
-    thing[id] += 1;
-    if (thing[id] == 3) thing[id] = 0;
-    
-    switch(thing[id]){
+function checkMinMaxVersion(){
+    let minMax = [];
+    for(let i = 1; i < document.getElementById("ToMuchButtons").rows.length; i++){
+        let version = parseFloat(document.getElementById("ToMuchButtons").rows[i].cells[4].innerText);
+        minMax.push(version);
+    }
+    console.log(minMax);
+}
+
+function versionUpDownEquale(btn){
+    let id = btn.id;
+    dataButtonsVersion[id]++;
+    if(dataButtonsVersion[id] > 3) dataButtonsVersion[id] = 0;
+    switch(dataButtonsVersion[id]){
         case 0:
             btn.style.backgroundColor = null;
             break;
@@ -60,7 +87,11 @@ function test_function(thing, id, btn){
         case 2:
             btn.style.backgroundColor = "rgb(255, 60, 60)";
             break;
+        case 3:
+            btn.style.backgroundColor = "yellow";
+            break;
     }
+    console.log(dataButtonsVersion)
     PrintTable();
 }
 
@@ -146,8 +177,8 @@ function getBestGuess(filtered){
 function PrintTable() {
     let filtered = [];
     var table = document.querySelector("#Trysss tbody");
-    while (table.rows.length > 1) {
-        table.deleteRow(1);
+    while (table.rows.length > 0) {
+        table.deleteRow(0);
     }
     for(let i = 0; i < Characters.length; i++){
         let canPrint = true;
@@ -161,26 +192,14 @@ function PrintTable() {
                 }
             }
         }
-        if(diference(i) == false){
-            canPrint = false;
-        }
+        // if(diference(i) == false){
+        //     canPrint = false;
+        // }
         if(canPrint){
             filtered.push(Characters[i]);
-            let row = table.insertRow();
-            for(let j = 0; j < Characters[i].length-1; j++){
-                let cell = row.insertCell();
-                if (j == 0) {
-                    let img = document.createElement("img");
-                    img.src = "images/Characters_Icons/" + Characters[i][1] + "_icon.webp";
-                    img.alt = Characters[i][1];
-                    img.className = "imageSize";
-                    cell.appendChild(img);
-                    continue;
-                }
-                cell.innerText = Characters[i][j];
-            }
         }
     }
+    createTable(filtered);
     getBestGuess(filtered);
 }
 function reset(){
@@ -223,42 +242,57 @@ function sumColumn(column){
     return sum;
 }
 
-function createTable(){
+function createTable(Charac){
     var table = document.querySelector("#Trysss tbody");
 
-    for(let i = 0; i < Characters.length; i++){
+    for(let i = 0; i < Charac.length; i++){
         let row = table.insertRow();
-        for(let j = 0; j < Characters[i].length-1; j++){
+        for(let j = 0; j < Charac[i].length-1; j++){
             let cell = row.insertCell();
             if (j == 0) {
                 let img = document.createElement("img");
-                img.src = "images/Characters_Icons/" + Characters[i][1] + "_icon.webp";
-                img.alt = Characters[i][1];
+                img.src = "images/Characters_Icons/" + Charac[i][1] + "_icon.webp";
+                img.alt = Charac[i][1];
                 img.className = "imageSize";
                 img.addEventListener("click", function() {
-                    addImageToTable(Characters[i]);
+                    addImageToTable(Charac[i]);
                 });
                 cell.appendChild(img);
                 continue;
             }
-            cell.innerText = Characters[i][j];
+            cell.innerText = Charac[i][j];
         }
     }
 }
 
 function addImageToTable(character){
+    if(document.getElementById("ToMuchButtons").rows.length > 5) return;
     let table = document.querySelector("#ToMuchButtons tbody");
     let row = table.insertRow();
-    console.log(character);
     for(let i = 2; i < 7; i++){
         let cell = row.insertCell();
-        let img = document.createElement("img");
-        img.src = "images/UI_Icons/" + character[i] + "_icon.png";
-        img.alt = character[i];
-        img.className = "imageSize";
-        img.addEventListener("click", function() {
-            alert("You clicked on " + character[i]);
-        });
-        cell.appendChild(img);
+        if (i != 6){
+            let img = document.createElement("img");
+            img.src = "images/UI_Icons/" + character[i] + "_icon.png";
+            img.alt = character[i];
+            if(i == 2) img.className = "raritySize";
+            else img.className = "imageSize";
+            img.addEventListener("click", function() {
+                askYesNo(i-2, dataNames[i-2].indexOf(character[i]), this);
+            });
+            cell.appendChild(img);
+            changeColor(dataButtons[i-2][dataNames[i-2].indexOf(character[i])], i-2, character[i])
+        }
+        else{
+            let btn = document.createElement("button");
+            btn.id = document.getElementById("ToMuchButtons").rows.length-2;
+            btn.className = "versionButton";
+            btn.innerText = character[i];
+            btn.addEventListener("click", function() {                versionUpDownEquale(dataButtonsVersion, 0);
+                versionUpDownEquale(this);
+            });
+            cell.appendChild(btn);
+            dataButtonsVersion.push(0);
+        }
     }
 }
