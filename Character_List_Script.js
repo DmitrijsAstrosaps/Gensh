@@ -253,7 +253,7 @@ function addImageToTable(character){
     for(let i = 2; i < 7; i++){
         let cell = row.insertCell();
         let img = document.createElement("img");
-        img.src = "images/" + character[i] + "_icon.webp";
+        img.src = "images/UI_Icons/" + character[i] + "_icon.png";
         img.alt = character[i];
         img.className = "imageSize";
         img.addEventListener("click", function() {
