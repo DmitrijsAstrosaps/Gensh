@@ -125,11 +125,25 @@ h1 {
 
     font-size: 16px;
 }
-
 .bestInfo div {
     background-color: rgba(255,255,255,0.55);
 
     border-radius: 8px;
 
     padding: 6px;
+}
+.versionButton {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: white;
+        font-size: 24px;
+        background-color: rgb(98, 98, 98);
+        background-image: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
 }

@@ -64,13 +64,39 @@ function changeColor(color, thing, alt){
     }
 }
 
-function checkMinMaxVersion(){
-    let minMax = [];
-    for(let i = 1; i < document.getElementById("ToMuchButtons").rows.length; i++){
-        let version = parseFloat(document.getElementById("ToMuchButtons").rows[i].cells[4].innerText);
-        minMax.push(version);
+function checkMinMaxVersion(index){
+    let up = [];
+    let down = [];
+    let equale = [];
+    for (let i = 0; i < dataButtonsVersion.length; i++){
+        let version = parseFloat(document.getElementById("ToMuchButtons").rows[i+1].cells[4].innerText);
+        switch(dataButtonsVersion[i]){
+            case 0:
+                break;
+            case 1:
+                up.push(version);
+                break
+            case 2:
+                down.push(version);
+                break;
+            case 3:
+                equale.push(version);
+                break;
+        }
     }
-    console.log(minMax);
+
+    if(equale.length > 0){
+        return Characters[index][6] == Math.min(...equale);
+    }
+    if(up.length > 0 && down.length >0){
+        return Characters[index][6] > Math.max(...up) && Characters[index][6] < Math.min(...down);
+    }
+    if(up.length > 0){
+        return Characters[index][6] > Math.max(...up);
+    }
+    if(down.length >0){
+        return Characters[index][6] < Math.min(...down);
+    }
 }
 
 function versionUpDownEquale(btn){
@@ -79,39 +105,19 @@ function versionUpDownEquale(btn){
     if(dataButtonsVersion[id] > 3) dataButtonsVersion[id] = 0;
     switch(dataButtonsVersion[id]){
         case 0:
-            btn.style.backgroundColor = null;
+            btn.style.backgroundImage = "none";
             break;
         case 1:
-            btn.style.backgroundColor = "rgb(48, 193, 48)";
+            btn.style.backgroundImage = "url('images/UI_Icons/Up_icon.png')";
             break;
         case 2:
-            btn.style.backgroundColor = "rgb(255, 60, 60)";
+            btn.style.backgroundImage = "url('images/UI_Icons/Down_icon.png')";
             break;
         case 3:
-            btn.style.backgroundColor = "yellow";
+            btn.style.backgroundImage = "url('images/UI_Icons/Equal_icon.png')";
             break;
     }
-    console.log(dataButtonsVersion)
     PrintTable();
-}
-
-function diference(i){
-    var upVersion = parseFloat(document.getElementById("up").value);
-    var downVersion = parseFloat(document.getElementById("down").value);
-    var equaleVersion = parseFloat(document.getElementById("equale").value);
-
-    if(!isNaN(equaleVersion)){
-        return Characters[i][6] == equaleVersion;
-    }
-    if(!isNaN(upVersion) && !isNaN(downVersion) ){
-        return Characters[i][6] > upVersion && Characters[i][6] < downVersion;
-    }
-    if(!isNaN(upVersion)){
-        return Characters[i][6] > upVersion;
-    }
-    if(!isNaN(downVersion)){
-        return Characters[i][6] < downVersion;
-    }
 }
 
 function getCharacterScore(char, filtered){
@@ -192,9 +198,9 @@ function PrintTable() {
                 }
             }
         }
-        // if(diference(i) == false){
-        //     canPrint = false;
-        // }
+        if(checkMinMaxVersion(i) == false){
+            canPrint = false;
+        }
         if(canPrint){
             filtered.push(Characters[i]);
         }
@@ -209,21 +215,21 @@ function reset(){
         [0, 0, 0, 0, 0],            // Sword, Claymore, Polearm, Bow, Catalyst
         [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
     ];
-    document.querySelectorAll(".imageSize").forEach(btn => btn.style.backgroundColor = null);
-    document.querySelectorAll(".raritySize").forEach(btn => btn.style.backgroundColor = null);
+    dataButtonsVersion = [];
 
     if(bestCharacters.length > 0){
         Characters[bestCharacters[0][0]-1][7] += 1; 
     }
 
     getBestGuess([]);
-    var table = document.getElementById("Trysss");
-    while (table.rows.length > 1) {
-        table.deleteRow(1);
+    var charTable = document.getElementById("Trysss");
+    while (charTable.rows.length > 1) {
+        charTable.deleteRow(1);
     }
-    // document.getElementById("up").value = "";
-    // document.getElementById("down").value = "";
-    // document.getElementById("equale").value = "";
+    var guessTable = document.getElementById("ToMuchButtons");
+    while (guessTable.rows.length > 1){
+        guessTable.deleteRow(1);
+    }
 }
 
 function printAll(){
@@ -288,7 +294,8 @@ function addImageToTable(character){
             btn.id = document.getElementById("ToMuchButtons").rows.length-2;
             btn.className = "versionButton";
             btn.innerText = character[i];
-            btn.addEventListener("click", function() {                versionUpDownEquale(dataButtonsVersion, 0);
+            btn.style.backgroundImage = "images/UI_Icons/Up_icon.png";
+            btn.addEventListener("click", function() {
                 versionUpDownEquale(this);
             });
             cell.appendChild(btn);
