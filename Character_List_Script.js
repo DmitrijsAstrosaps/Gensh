@@ -20,6 +20,10 @@ async function loadCharacters() {
 }
 
 window.onload = loadCharacters;
+window.onload = async function() {
+    await loadCharacters();
+    createTable(Characters);
+}
 
 let dataNames = [
     ["4", "5"], 
@@ -230,6 +234,7 @@ function reset(){
     while (guessTable.rows.length > 1){
         guessTable.deleteRow(1);
     }
+    createTable(Characters);
 }
 
 function printAll(){
