@@ -43,14 +43,13 @@ h1 {
 }
 #ToMuchButtons th, #ToMuchButtons td {
         border: 1px solid white;
+        height: 60px;
+        width: 60px;
 }
 .imageSize {
         width: 60px;
         height: 60px;
-}
-.raritySize {
-        width: 215px;
-        height: 60px;
+        cursor: pointer;
 }
 .wrapper {
         position: relative;
@@ -96,7 +95,6 @@ h1 {
 
         background-color: white;
 }
-
 .bestContent{
         width: 100%;
         text-align: center;

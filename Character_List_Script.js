@@ -39,7 +39,7 @@ let dataButtons = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
 ];
 
-let dataButtonsVersion = [];
+let dataButtonsVersion = [0, 0, 0, 0, 0];
 
 let bestCharacters = [];
 
@@ -52,6 +52,7 @@ function askYesNo(thing, id, btn){
 function changeColor(color, thing, alt){
     for (let i = 1; i < document.getElementById("ToMuchButtons").rows.length; i++){
         let cellData = document.getElementById("ToMuchButtons").rows[i].cells[thing];
+        if (cellData.firstChild == null) break;
         if (cellData.firstChild.alt == alt){
             switch(color){
                 case 0:
@@ -219,7 +220,7 @@ function reset(){
         [0, 0, 0, 0, 0],            // Sword, Claymore, Polearm, Bow, Catalyst
         [0, 0, 0, 0, 0, 0, 0, 0, 0] // Mondstadt, Liyue, Inazuma, Sumeru, Fontaine, Natlan, Nod-Krai, Snezhnaya, Outlander
     ];
-    dataButtonsVersion = [];
+    dataButtonsVersion = [0, 0, 0, 0, 0];
 
     if(bestCharacters.length > 0){
         Characters[bestCharacters[0][0]-1][7] += 1; 
@@ -230,10 +231,17 @@ function reset(){
     while (charTable.rows.length > 1) {
         charTable.deleteRow(1);
     }
-    var guessTable = document.getElementById("ToMuchButtons");
-    while (guessTable.rows.length > 1){
-        guessTable.deleteRow(1);
+    var guessTable = document.querySelector("#ToMuchButtons tbody");
+    while (guessTable.rows.length > 0){
+        guessTable.deleteRow(0);
     }
+    for (let r = 0; r < 5; r++){
+        let row = guessTable.insertRow();
+        for (let c = 0; c < 5; c++){
+            row.insertCell();
+        }
+    }
+    rowIndex = 0;
     createTable(Characters);
 }
 
@@ -275,19 +283,18 @@ function createTable(Charac){
         }
     }
 }
-
+let rowIndex = 0;
 function addImageToTable(character){
-    if(document.getElementById("ToMuchButtons").rows.length > 5) return;
+    if(rowIndex > 5) return;
     let table = document.querySelector("#ToMuchButtons tbody");
-    let row = table.insertRow();
+    let row = table.querySelectorAll("tr")[rowIndex];
     for(let i = 2; i < 7; i++){
-        let cell = row.insertCell();
+        let cell = row.cells[i-2];
         if (i != 6){
             let img = document.createElement("img");
             img.src = "images/UI_Icons/" + character[i] + "_icon.png";
             img.alt = character[i];
-            if(i == 2) img.className = "raritySize";
-            else img.className = "imageSize";
+            img.className = "imageSize";
             img.addEventListener("click", function() {
                 askYesNo(i-2, dataNames[i-2].indexOf(character[i]), this);
             });
@@ -296,15 +303,16 @@ function addImageToTable(character){
         }
         else{
             let btn = document.createElement("button");
-            btn.id = document.getElementById("ToMuchButtons").rows.length-2;
+            btn.id = rowIndex;
             btn.className = "versionButton";
             btn.innerText = character[i];
-            btn.style.backgroundImage = "images/UI_Icons/Up_icon.png";
+            // btn.style.backgroundImage = "url('images/UI_Icons/Up_icon.png')";
             btn.addEventListener("click", function() {
                 versionUpDownEquale(this);
             });
             cell.appendChild(btn);
-            dataButtonsVersion.push(0);
+            // dataButtonsVersion.push(0);
         }
     }
+    rowIndex++;
 }
